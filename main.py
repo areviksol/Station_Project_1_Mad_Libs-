@@ -62,6 +62,7 @@ templates = [
     I hope one day you can visit, although the only way to get here 
     now is <Verb (ending in ing)> on a <Adjective5>  <Noun5>!!'''
 ]
+
 try:
     print("Do you want to choose a template or should it be randomly selected?")
     choice_input = input("Enter 'choose' to select a template or 'random' for a random selection: ")
@@ -72,16 +73,17 @@ try:
             print(f"{index + 1}. Template {index + 1}")
 
         selected_template_index = int(input("Choose a template (enter the corresponding number): ")) - 1
-        selected_template = templates[selected_template_index]
+        if 0 <= selected_template_index < len(templates):
+            selected_template = templates[selected_template_index]
+        else:
+            print("Not a valid template index. Template will be chosen automatically.")
+            selected_template = choice(templates)
     else:
         selected_template = choice(templates)
-
     template_variables = extract_variables(selected_template)
-
     completed_story = fill_mad_libs(template_variables, selected_template)
-
     print(completed_story)
 except KeyboardInterrupt:
-    print("interrupted!")
+    print("Interrupted!")
 except ValueError:
-    print("Not valid template!")
+    print("Not a valid template index!")
